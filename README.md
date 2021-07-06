@@ -1,6 +1,6 @@
 # Various ways of Prefetching HLS Segments on the Fastly Edge
 
-Prerequisite - VCL, Fastly CDN, Javascript, Rust, Media Playlist structure.
+Prerequisite - VCL, Fastly, CDN, HTTP, Javascript, Rust, Media Playlist structure.
 
 
 ## Features
