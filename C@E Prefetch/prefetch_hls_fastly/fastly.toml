@@ -1,0 +1,10 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+authors = ["jay.bhaskar@gmail.com"]
+description = "Prefetch HLS playlist segments"
+language = "rust"
+manifest_version = 1
+name = "prefetch_playlist"
+service_id = "55kkrwwMJB4i5AXWIHS9xR"
+

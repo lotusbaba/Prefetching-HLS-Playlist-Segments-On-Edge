@@ -1,0 +1,105 @@
+<html>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <video id="video" controls></video>
+    <script>
+    if(Hls.isSupported())
+    {
+        var video = document.getElementById('video');
+        var hls = new Hls();
+        hls.loadSource('https://fetch-via-link-headers.global.ssl.fastly.net/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index.m3u8');
+        
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED,function()
+        {
+            video.play();
+        });
+    }
+    else if (video.canPlayType('application/vnd.apple.mpegurl'))
+    {
+        video.src = 'https://fetch-via-link-headers.global.ssl.fastly.net/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index.m3u8';
+        video.addEventListener('canplay',function()
+        {
+            video.play();
+        });
+    }
+
+    (function() {
+    var proxied = window.XMLHttpRequest.prototype.open;
+    window.XMLHttpRequest.prototype.open = function(method, url) {
+      if (url.search("prefetch") >=0 ) {
+        console.log( "Prefetched segment so will set very short timeout" + url );
+        arguments[1].replace("/prefetch/", "/");
+        proxied.timeout = 50; // time in milliseconds
+        
+        this.ontimeout = function (e) {
+            console.log("We timedout on the prefetch");// XMLHttpRequest timed out. Do something here.
+        };
+
+        console.log( "Prefetched segment so will set very short timeout. URL is " + arguments[1] + ". And handled asynchronously: - " + arguments[2] );
+      }
+
+      this.onload = function (e) {
+            console.log("We onload on the prefetch"); // XMLHttpRequest loaded. Do something here.
+            
+            var data = null; //getresponseheader can be null or have a value
+            data = this.getResponseHeader('prefetchedsegment');
+
+            console.log("This is the prefetched segment header :- " + data);
+
+            var segmentcount = parseInt(this.getResponseHeader('segmentcount'));
+
+            if (data != null) {
+                //1. Now let's construct an xhr response
+                let xhr = new XMLHttpRequest();
+
+                // 2. Configure it: GET-request for the URL /article/.../load
+                const regexpSize = "/([a-zA-Z]+)([^a-zA-Z.]+).ts";
+                const match = data.match(regexpSize);
+                var indexcnt = parseInt(match[2]);
+                
+                var lookaheadindexcnt = indexcnt;
+
+                while (segmentcount > 0) {
+                    
+                    xhr.open('GET', "https://fetch-via-link-headers.global.ssl.fastly.net/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index" + lookaheadindexcnt + ".ts");
+                    xhr.timeout = 50;
+                    segmentcount -= 1;
+                    console.log ("segmentcnt: " + segmentcount + ", indexcnt: " + indexcnt + ", lookaheadcnt: " + lookaheadindexcnt);
+                    console.log ("Prefetching:- index" + lookaheadindexcnt + ".ts");
+                    lookaheadindexcnt += 1;
+                    
+                    xhr.ontimeout = function (e) {
+                        console.log("We timedout on the client JS prefetch");// XMLHttpRequest timed out. Do something here.
+                    };
+
+                    // 3. Send the request over the network
+                    xhr.send();
+
+                    testWait();
+
+                }
+            }
+        };
+
+        return proxied.apply(this, arguments);
+        };
+    
+    })();
+
+
+
+    async function testWait() {
+        await wait(40);
+    }
+
+    function wait(time) {
+        return new Promise(resolve => {
+            setTimeout(() => {
+                resolve();
+            }, time);
+        });
+    }
+    </script>
+  </body>
+</html>
