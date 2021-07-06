@@ -4,7 +4,6 @@ use fastly::http::{ Method, StatusCode};
 use fastly::{ Error, Request, Response, Body};
 use m3u8_rs::playlist::{Playlist};
 use url::Url;
-use hls_m3u8::MediaPlaylist;
 
 /// The name of a backend server associated with this service.
 ///
