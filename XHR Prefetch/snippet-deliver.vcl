@@ -2,7 +2,7 @@ declare local var.segment_num INTEGER;
 declare local var.remainder INTEGER;
 declare local var.segment_obj STRING;
 
-if (req.backend.is_shield && fastly_info.state !~ "HIT" && req.url ~ "/([a-zA-Z]+)([^a-zA-Z.]+).ts" && http_status_matches(resp.status, "200,304")) {
+if (req.backend.is_shield && req.url ~ "/([a-zA-Z]+)([^a-zA-Z.]+).ts" && http_status_matches(resp.status, "200,304")) {
 
   set var.segment_num =  std.atoi(re.group.2);
   set var.remainder = var.segment_num;
