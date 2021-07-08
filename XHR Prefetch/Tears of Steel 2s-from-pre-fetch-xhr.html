@@ -7,7 +7,7 @@
     {
         var video = document.getElementById('video');
         var hls = new Hls();
-        hls.loadSource('https://pre-fetch-xhr.global.ssl.fastly.net/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index.m3u8');
+        hls.loadSource('/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index.m3u8');
         
         hls.attachMedia(video);
         hls.on(Hls.Events.MANIFEST_PARSED,function()
@@ -17,7 +17,7 @@
     }
     else if (video.canPlayType('application/vnd.apple.mpegurl'))
     {
-        video.src = 'https://pre-fetch-xhr.global.ssl.fastly.net/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index.m3u8';
+        video.src = '/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index.m3u8';
         video.addEventListener('canplay',function()
         {
             video.play();
@@ -62,7 +62,7 @@
 
                 while (segmentcount > 0) {
                     
-                    xhr.open('GET', "https://pre-fetch-xhr.global.ssl.fastly.net/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index" + lookaheadindexcnt + ".ts");
+                    xhr.open('GET', "/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index" + lookaheadindexcnt + ".ts");
                     xhr.timeout = 50;
                     segmentcount -= 1;
                     console.log ("segmentcnt: " + segmentcount + ", indexcnt: " + indexcnt + ", lookaheadcnt: " + lookaheadindexcnt);
@@ -86,8 +86,6 @@
         };
     
     })();
-
-
 
     async function testWait() {
         await wait(40);
