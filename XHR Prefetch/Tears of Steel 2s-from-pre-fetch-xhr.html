@@ -27,7 +27,7 @@
     (function() {
     var proxied = window.XMLHttpRequest.prototype.open;
     window.XMLHttpRequest.prototype.open = function(method, url) {
-      if (url.search("prefetch") >=0 ) {
+      /*if (url.search("prefetch") >=0 ) {
         console.log( "Prefetched segment so will set very short timeout" + url );
         arguments[1].replace("/prefetch/", "/");
         proxied.timeout = 50; // time in milliseconds
@@ -37,7 +37,7 @@
         };
 
         console.log( "Prefetched segment so will set very short timeout. URL is " + arguments[1] + ". And handled asynchronously: - " + arguments[2] );
-      }
+      }*/
 
       this.onload = function (e) {
             console.log("We onload on the prefetch"); // XMLHttpRequest loaded. Do something here.
