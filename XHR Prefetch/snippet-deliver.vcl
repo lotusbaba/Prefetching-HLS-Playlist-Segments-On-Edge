@@ -14,7 +14,12 @@ if (req.backend.is_shield && req.url ~ "/([a-zA-Z]+)([^a-zA-Z.]+).ts" && http_st
       set resp.http.fetchedurl = "This is the original object: "req.url;
       set resp.http.prefetchedsegment =  req.url.dirname "/" var.segment_obj std.itoa(var.segment_num) ".ts";
   }
-  set resp.http.segmentcount = var.remainder;
+
+  if (var.remainder > 0) {
+      set resp.http.segmentcount = var.remainder;
+  } else {
+      set resp.http.segmentcount = "2";
+  }
 }
 set resp.http.Access-Control-Allow-Origin = "*";
 set resp.http.Access-Control-Expose-Headers = "fetchedurl, prefetchedsegment, segmentcount";
