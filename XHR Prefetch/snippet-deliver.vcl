@@ -20,7 +20,7 @@ if (req.url ~ "/([a-zA-Z]+)([^a-zA-Z.]+).ts" && http_status_matches(resp.status,
   if (var.remainder > 0) {
       set resp.http.segmentcount = var.remainder;
   } else {
-      set resp.http.segmentcount = "2";
+      set resp.http.segmentcount = "3";
   }
 }
 set resp.http.Access-Control-Allow-Origin = "*";
