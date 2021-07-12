@@ -63,7 +63,7 @@
                 while (segmentcount > 0) {
                     
                     xhr.open('GET', "/Tears_of_steel/Tears_Of_Steel_784%C3%97350_Bitrate_1197000_2s/index" + lookaheadindexcnt + ".ts");
-                    xhr.timeout = 20;
+                    xhr.timeout = 45;
                     segmentcount -= 1;
                     console.log ("segmentcnt: " + segmentcount + ", indexcnt: " + indexcnt + ", lookaheadcnt: " + lookaheadindexcnt);
                     console.log ("Prefetching:- index" + lookaheadindexcnt + ".ts");
@@ -88,7 +88,7 @@
     })();
 
     async function testWait() {
-        await wait(20);
+        await wait(25);
     }
 
     function wait(time) {
